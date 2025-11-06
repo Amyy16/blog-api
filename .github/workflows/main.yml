@@ -1,0 +1,29 @@
+name: Build a Nodejs App
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  
+jobs:
+  build_and_push:
+    name: countious integration
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node_version: ['18.x', '20.x'] 
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node_version}}
+      - name: install dependencies
+        run: |
+         npm install
+         npm run test
+     
+  
